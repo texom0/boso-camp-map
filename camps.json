@@ -1,0 +1,288 @@
+[
+    {
+      "id": "private-001",
+      "name": "庭キャンプ eneca",
+      "type": "private",
+      "area": "木更津市",
+      "lat": 35.3528,
+      "lng": 140.0019,
+      "hpUrl": "https://niwa-camp-eneca.stores.jp/reserve/honten-i2vi3z/3517145",
+      "imageUrl": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=800",
+      "catchCopy": "矢那の自然に囲まれた1日1組限定のプライベート庭キャンプスペース",
+      "tags": [
+        "ペットOK",
+        "日帰りOK",
+        "竹林・林間",
+        "星空がきれい",
+        "水洗トイレ",
+        "お風呂・温泉あり",
+        "AC電源あり",
+        "ゴミ捨て場あり",
+        "オートキャンプ",
+        "直火OK",
+        "ドラム缶風呂・五右衛門風呂",
+        "サウナ",
+        "ピザ窯",
+        "プライベート感"
+      ],
+      "notes": {
+        "pet": "愛犬同伴OK",
+        "fire": "直火OK（ファイヤーピット完備）",
+        "facility": "建物内の水洗トイレ・お風呂利用可能（時間指定・制限あり） / 予約制"
+      }
+    },
+    {
+      "id": "camp-001",
+      "name": "オートキャンプイン勝浦",
+      "type": "commercial",
+      "area": "勝浦市",
+      "lat": 35.1633,
+      "lng": 140.2867,
+      "hpUrl": "https://www.autocampin-katsuura.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800",
+      "catchCopy": "緑豊かな林間サイトと清潔なお風呂が自慢のファミリー向けキャンプ場",
+      "tags": [
+        "ペットOK",
+        "ファミリー向け",
+        "竹林・林間",
+        "水洗トイレ",
+        "お風呂・温泉あり",
+        "AC電源あり",
+        "ゴミ捨て場あり",
+        "オートキャンプ"
+      ],
+      "notes": {
+        "pet": "ペット同伴可能（要リード着用・事前申告）",
+        "fire": "直火禁止（焚き火台＋シートをご利用ください）",
+        "facility": "場内に温水シャワー・家族風呂（予約制）あり。水洗トイレ完備 / 5,500円〜"
+      }
+    },
+    {
+      "id": "camp-002",
+      "name": "Rewild Music Fes Camp",
+      "type": "commercial",
+      "area": "勝浦市",
+      "lat": 35.1952,
+      "lng": 140.2311,
+      "hpUrl": "https://rewild-camping.com/glamping/music-fes-camp/",
+      "imageUrl": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=800",
+      "catchCopy": "芝生が広がる開放的な空間で音楽と星空を楽しむ体験型キャンプ場",
+      "tags": [
+        "ソロ向け",
+        "ファミリー向け",
+        "日帰りOK",
+        "高台・絶景",
+        "星空がきれい",
+        "水洗トイレ",
+        "ゴミ捨て場あり"
+      ],
+      "notes": {
+        "pet": "一部ゾーンにてペット同伴可能",
+        "fire": "直火禁止（指定のレンタル焚き火台等を使用）",
+        "facility": "女性専用のおしゃれな洗面台やきれいな水洗トイレ完備 / 2,000円〜"
+      }
+    },
+    {
+      "id": "camp-003",
+      "name": "キャンピングヒルズ鴨川",
+      "type": "commercial",
+      "area": "鴨川市",
+      "lat": 35.1189,
+      "lng": 140.0825,
+      "hpUrl": "http://kamogawa-camp.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?w=800",
+      "catchCopy": "棚田を望む高台のロケーションと自家製ハーブ風呂が魅力",
+      "tags": [
+        "ペットOK",
+        "ファミリー向け",
+        "高台・絶景",
+        "星空がきれい",
+        "水洗トイレ",
+        "お風呂・温泉あり",
+        "AC電源あり",
+        "オートキャンプ"
+      ],
+      "notes": {
+        "pet": "ペットOK（他のお客様のご迷惑にならないよう管理）",
+        "fire": "直火禁止（焚き火台必須）",
+        "facility": "名物の自家製ハーブ露天風呂あり（有料・露天風呂は水洗トイレ隣接） / 4,500円〜"
+      }
+    },
+    {
+      "id": "camp-004",
+      "name": "柿山田オートキャンプガーデン",
+      "type": "commercial",
+      "area": "君津市",
+      "lat": 35.2536,
+      "lng": 140.0528,
+      "hpUrl": "http://www.kakiyamada-autocamp.hello-net.info/",
+      "imageUrl": "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?w=800",
+      "catchCopy": "川のせせらぎと豊かな自然に囲まれた川遊びに最適なファミリー向けサイト",
+      "tags": [
+        "ファミリー向け",
+        "竹林・林間",
+        "川のそば",
+        "水洗トイレ",
+        "ゴミ捨て場あり",
+        "オートキャンプ",
+        "川遊び・釣り"
+      ],
+      "notes": {
+        "pet": "ペット不可",
+        "fire": "直火禁止（指定のコンロ・焚き火台をご使用ください）",
+        "facility": "足湯・温水シャワーあり。水洗トイレ完備 / 5,500円〜"
+      }
+    },
+    {
+      "id": "camp-005",
+      "name": "千石台オートキャンプ場",
+      "type": "commercial",
+      "area": "君津市",
+      "lat": 35.1844,
+      "lng": 140.1189,
+      "hpUrl": "https://www.sengokudai.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1517824806704-9040b037703b?w=800",
+      "catchCopy": "奥房総の秘境。清流小櫃川のすぐそばで自然を満喫できるアットホームなキャンプ場",
+      "tags": [
+        "ソロ向け",
+        "ファミリー向け",
+        "竹林・林間",
+        "川のそば",
+        "星空がきれい",
+        "水洗トイレ",
+        "お風呂・温泉あり",
+        "オートキャンプ",
+        "川遊び・釣り"
+      ],
+      "notes": {
+        "pet": "小型犬のみ同伴OK（リード必須）",
+        "fire": "直火禁止（焚き火台と保護シート必須）",
+        "facility": "予約制のお風呂（露天風風呂）あり。コインシャワー完備 / 5,000円〜"
+      }
+    },
+    {
+      "id": "camp-006",
+      "name": "Ocean's Camp Torami",
+      "type": "commercial",
+      "area": "一宮町",
+      "lat": 35.3522,
+      "lng": 140.3842,
+      "hpUrl": "https://oceans-camp-torami.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
+      "catchCopy": "海まで徒歩圏内！サーフィンや九十九里の潮風を感じる絶好のロケーション",
+      "tags": [
+        "ペットOK",
+        "ソロ向け",
+        "海が見える",
+        "水洗トイレ",
+        "AC電源あり",
+        "ゴミ捨て場あり",
+        "オートキャンプ",
+        "サウナ"
+      ],
+      "notes": {
+        "pet": "ペットOK（サウナ等一部エリアを除く）",
+        "fire": "直火禁止（焚き火台必須）",
+        "facility": "バレルサウナ（要予約）併設、温水シャワー・キレイな水洗トイレ完備 / 6,000円〜"
+      }
+    },
+    {
+      "id": "camp-007",
+      "name": "しげキャン（Shige Camp）",
+      "type": "commercial",
+      "area": "富津市",
+      "lat": 35.1911,
+      "lng": 139.8789,
+      "hpUrl": "https://shigecamp.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1496545614020-20f3b00ed084?w=800",
+      "catchCopy": "手作りの温かみがある隠れ家的なプライベートキャンプ場",
+      "tags": [
+        "ペットOK",
+        "ソロ向け",
+        "竹林・林間",
+        "水洗トイレ",
+        "直火OK",
+        "ドラム缶風呂・五右衛門風呂",
+        "ピザ窯",
+        "プライベート感"
+      ],
+      "notes": {
+        "pet": "ペット可（他のお客様の安全に配慮のこと）",
+        "fire": "一部指定サイトにて直火OK（マナー遵守）",
+        "facility": "名物のドラム缶風呂や手作りピザ窯体験可能 / 2,500円〜"
+      }
+    },
+    {
+      "id": "camp-008",
+      "name": "根本海水浴場キャンプ場",
+      "type": "commercial",
+      "area": "南房総市",
+      "lat": 34.9056,
+      "lng": 139.8369,
+      "hpUrl": "https://www.cm-boso.com/camp.html",
+      "imageUrl": "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800",
+      "catchCopy": "目の前に広がる太平洋！夏限定で開設される絶景ビーチサイドキャンプ場",
+      "tags": [
+        "ソロ向け",
+        "ファミリー向け",
+        "日帰りOK",
+        "海が見える",
+        "高台・絶景",
+        "星空がきれい"
+      ],
+      "notes": {
+        "pet": "海水浴場規定に準拠（シーズン中制限あり）",
+        "fire": "砂浜での直火厳禁（焚き火台使用）",
+        "facility": "夏季開設期間のみ仮設トイレ・シャワー設置あり / 3,000円〜"
+      }
+    },
+    {
+      "id": "camp-009",
+      "name": "勝浦ショウノウ CAMP FIELD",
+      "type": "commercial",
+      "area": "勝浦市",
+      "lat": 35.1883,
+      "lng": 140.2522,
+      "hpUrl": "https://www.shono-camp.com/",
+      "imageUrl": "https://images.unsplash.com/photo-1445307806294-bff7f67ff225?w=800",
+      "catchCopy": "昔ながらの里山風景と竹林に囲まれた静寂を楽しめるブッシュクラフト向けサイト",
+      "tags": [
+        "ペットOK",
+        "ソロ向け",
+        "竹林・林間",
+        "水洗トイレ",
+        "直火OK",
+        "プライベート感"
+      ],
+      "notes": {
+        "pet": "ペット同伴可能",
+        "fire": "直火OKエリアあり（落ち葉等の清掃・消火徹底）",
+        "facility": "水洗トイレ・水場あり。静かに過ごしたいキャンパー限定 / 3,000円〜"
+      }
+    },
+    {
+      "id": "camp-010",
+      "name": "THE DOG DEPT GARDEN RESORT-ANBOU-",
+      "type": "commercial",
+      "area": "館山市",
+      "lat": 34.9811,
+      "lng": 139.8522,
+      "hpUrl": "https://www.dogdept.com/resort/",
+      "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800",
+      "catchCopy": "愛犬家のために作られたワンちゃんファーストなノーリードOKキャンプ場",
+      "tags": [
+        "ペットOK",
+        "ファミリー向け",
+        "水洗トイレ",
+        "AC電源あり",
+        "ゴミ捨て場あり",
+        "オートキャンプ",
+        "プライベート感"
+      ],
+      "notes": {
+        "pet": "全サイト柵付き・ノーリードOK（ワクチン接種証明要）",
+        "fire": "直火不可（専用の焚き火スペースまたは台を使用）",
+        "facility": "ドッグラン、犬用シャワー、温水洗浄便座付きトイレ完備 / 10,000円〜"
+      }
+    }
+  ]

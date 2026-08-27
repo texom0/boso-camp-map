@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f7f5;
+  --foreground: #2f332e;
+  --forest: #4f6f5c;
+  --sage: #7d9a86;
+  --earth: #a68b6a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-noto-sans-jp);
+  --font-display: var(--font-zen-kaku);
+  --font-latin: var(--font-montserrat);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  font-family: inherit;
+  background: #eef1ee;
+}
+
+.leaflet-container img {
+  max-width: none !important;
+}
+
+.leaflet-control-zoom a {
+  color: #4f6f5c !important;
+  border-color: #e5e7e4 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(47 51 46 / 0.12);
+  padding: 0;
+  overflow: hidden;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  width: 300px !important;
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+}
+
+.leaflet-popup-tip {
+  background: #fff;
+}
+
+.camp-pin {
+  background: none !important;
+  border: none !important;
+}
+
+.camp-pin__mark {
+  display: block;
+  width: 44px;
+  height: 54px;
+  filter: drop-shadow(0 1px 2px rgb(47 51 46 / 0.25));
+}
+
+.camp-pin__mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.camp-popup__badge {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.camp-popup__badge--private {
+  background: #f4e6c8;
+  color: #8a5a12;
+}
+
+.camp-popup__badge--commercial {
+  background: #eef3ef;
+  color: #4f6f5c;
+}
+
+.camp-popup {
+  color: #2f332e;
+}
+
+.camp-popup__photo {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 140px !important;
+  object-fit: cover;
+}
+
+.camp-popup__body {
+  padding: 12px 14px 14px;
+}
+
+.camp-popup__area {
+  margin: 0 0 2px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #7d9a86;
+}
+
+.camp-popup__title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.camp-popup__desc {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6b7068;
+}
+
+.camp-popup__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.camp-popup__tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: #eef3ef;
+  color: #4f6f5c;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+}
+
+.camp-popup__notes {
+  margin: 0 0 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.camp-popup__notes > div {
+  display: grid;
+  grid-template-columns: 3.2em 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.camp-popup__notes dt {
+  font-size: 10px;
+  font-weight: 700;
+  color: #4f6f5c;
+  padding-top: 1px;
+}
+
+.camp-popup__notes dd {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #5c6158;
+}
+
+.camp-popup__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 8px;
+  background: #4f6f5c;
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 12px;
+}
+
+.camp-popup__link:hover {
+  background: #3f5c4b;
+}
+
+.filter-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.filter-accordion summary {
+  position: relative;
+  padding-right: 1.5rem;
+}
+
+.filter-accordion summary::after {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  content: "＋";
+  transform: translateY(-50%);
+  color: #7d9a86;
+  font-size: 12px;
+}
+
+.filter-accordion[open] summary::after {
+  content: "−";
+}
