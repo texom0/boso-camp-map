@@ -3,7 +3,8 @@
 import dynamic from "next/dynamic";
 import { useMemo, useState, type ReactNode } from "react";
 import campsData from "@/camps.json";
-import { isPrivateCamp, type Campground } from "@/types/camp";
+import { normalizeCamps } from "@/lib/camps";
+import { isPrivateCamp } from "@/types/camp";
 
 const CampMap = dynamic(() => import("./CampMap"), {
   ssr: false,
@@ -13,41 +14,6 @@ const CampMap = dynamic(() => import("./CampMap"), {
     </div>
   ),
 });
-
-function normalizeCamps(data: unknown): Campground[] {
-  if (!Array.isArray(data)) return [];
-
-  return data.flatMap((item) => {
-    if (!item || typeof item !== "object") return [];
-    const raw = item as Record<string, unknown>;
-    const lat = Number(raw.lat);
-    const lng = Number(raw.lng);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return [];
-
-    const tags = Array.isArray(raw.tags)
-      ? raw.tags.filter((tag): tag is string => typeof tag === "string")
-      : [];
-
-    return [
-      {
-        id: String(raw.id ?? `${lat},${lng}`),
-        name: String(raw.name ?? "名称未設定"),
-        type: raw.type === "private" ? "private" : "commercial",
-        area: String(raw.area ?? ""),
-        lat,
-        lng,
-        hpUrl: String(raw.hpUrl ?? ""),
-        imageUrl: String(raw.imageUrl ?? ""),
-        catchCopy: String(raw.catchCopy ?? ""),
-        tags,
-        notes:
-          raw.notes && typeof raw.notes === "object"
-            ? (raw.notes as Campground["notes"])
-            : {},
-      },
-    ];
-  });
-}
 
 const TAG_GROUPS: { id: string; title: string; tags: string[] }[] = [
   {
@@ -126,7 +92,7 @@ function FilterCheck({
   children: ReactNode;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-stone-200 bg-[#f6f7f5] px-3 py-2 transition-colors has-[:checked]:border-[#7d9a86] has-[:checked]:bg-[#eef3ef]">
+    <label className="relative z-10 flex cursor-pointer touch-manipulation items-center gap-2.5 rounded-lg border border-stone-200 bg-[#f6f7f5] px-3 py-2 transition-colors has-[:checked]:border-[#7d9a86] has-[:checked]:bg-[#eef3ef]">
       <input
         type="checkbox"
         className={`size-4 shrink-0 ${accentClass ?? "accent-[#4f6f5c]"}`}
@@ -168,7 +134,7 @@ export default function CampSearchApp() {
 
   return (
     <div className="flex h-dvh flex-col bg-[#f6f7f5] text-[#2f332e]">
-      <header className="border-b border-white/15 bg-[linear-gradient(180deg,#1f4d3a_0%,#16382b_52%,#0c221a_100%)] px-4 py-2 md:px-6">
+      <header className="relative z-30 border-b border-white/15 bg-[linear-gradient(180deg,#1f4d3a_0%,#16382b_52%,#0c221a_100%)] px-4 py-2 md:px-6">
         <div className="flex items-center justify-center gap-2.5 md:gap-3">
           <HeaderEmblem className="size-7 shrink-0 text-white md:size-8" />
           <div className="min-w-0 text-center sm:text-left">
@@ -183,7 +149,7 @@ export default function CampSearchApp() {
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-        <aside className="flex max-h-[46vh] shrink-0 flex-col border-b border-stone-200 bg-white md:max-h-none md:w-80 md:border-b-0 md:border-r">
+        <aside className="relative z-20 flex max-h-[46vh] shrink-0 flex-col border-b border-stone-200 bg-white md:max-h-none md:w-80 md:border-b-0 md:border-r">
           <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 md:px-5 md:py-5">
             <section className="mb-4">
               <h2 className="mb-2 font-display text-sm font-medium tracking-[0.16em] text-stone-800">
@@ -199,7 +165,7 @@ export default function CampSearchApp() {
                     商業キャンプ場
                   </span>
                 </FilterCheck>
-                <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-amber-200 bg-[#fbf6ea] px-3 py-2 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                <label className="relative z-10 flex cursor-pointer touch-manipulation items-center gap-2.5 rounded-lg border border-amber-200 bg-[#fbf6ea] px-3 py-2 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
                   <input
                     type="checkbox"
                     className="size-4 shrink-0 accent-[#c47a22]"
@@ -229,7 +195,7 @@ export default function CampSearchApp() {
                     className="filter-accordion rounded-lg border border-stone-200 bg-[#f6f7f5]"
                     open={index === 0}
                   >
-                    <summary className="cursor-pointer list-none px-3 py-2 text-sm font-medium text-stone-800">
+                    <summary className="cursor-pointer touch-manipulation list-none px-3 py-2 text-sm font-medium text-stone-800">
                       {group.title}
                     </summary>
                     <ul className="space-y-1.5 border-t border-stone-200 px-2 py-2">
@@ -259,7 +225,7 @@ export default function CampSearchApp() {
           </p>
         </aside>
 
-        <section className="relative min-h-[52vh] flex-1 md:min-h-0">
+        <section className="relative z-0 min-h-0 flex-1 isolate overflow-hidden">
           <CampMap
             key={positionsKey}
             camps={visibleCamps}

@@ -16,7 +16,8 @@ export type Campground = {
   lat: number;
   lng: number;
   hpUrl: string;
-  imageUrl: string;
+  reservationUrl?: string;
+  imageUrl?: string;
   catchCopy: string;
   tags: string[];
   notes: CampNotes;

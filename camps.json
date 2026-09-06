@@ -6,7 +6,8 @@
       "area": "木更津市",
       "lat": 35.3528,
       "lng": 140.0019,
-      "hpUrl": "https://niwa-camp-eneca.stores.jp/reserve/honten-i2vi3z/3517145",
+      "hpUrl": "https://niwa-camp-eneca.stores.jp/",
+      "reservationUrl": "https://niwa-camp-eneca.stores.jp/reserve/honten-i2vi3z/3517145",
       "imageUrl": "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=800",
       "catchCopy": "矢那の自然に囲まれた1日1組限定のプライベート庭キャンプスペース",
       "tags": [
@@ -38,7 +39,7 @@
       "area": "勝浦市",
       "lat": 35.1633,
       "lng": 140.2867,
-      "hpUrl": "https://www.autocampin-katsuura.com/",
+      "hpUrl": "http://www.autocamping-katsuura.com/",
       "imageUrl": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800",
       "catchCopy": "緑豊かな林間サイトと清潔なお風呂が自慢のファミリー向けキャンプ場",
       "tags": [
@@ -64,7 +65,8 @@
       "area": "勝浦市",
       "lat": 35.1952,
       "lng": 140.2311,
-      "hpUrl": "https://rewild-camping.com/glamping/music-fes-camp/",
+      "hpUrl": "https://www.campforlife.jp/",
+      "reservationUrl": "https://www.nap-camp.com/chiba/14307",
       "imageUrl": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=800",
       "catchCopy": "芝生が広がる開放的な空間で音楽と星空を楽しむ体験型キャンプ場",
       "tags": [
@@ -89,7 +91,8 @@
       "area": "鴨川市",
       "lat": 35.1189,
       "lng": 140.0825,
-      "hpUrl": "http://kamogawa-camp.com/",
+      "hpUrl": "https://www.kamogawacamp.jp/",
+      "reservationUrl": "https://www.nap-camp.com/chiba/11941",
       "imageUrl": "https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?w=800",
       "catchCopy": "棚田を望む高台のロケーションと自家製ハーブ風呂が魅力",
       "tags": [
@@ -109,29 +112,22 @@
       }
     },
     {
-      "id": "camp-004",
+      "id": "kakiyamada-autocamp",
       "name": "柿山田オートキャンプガーデン",
       "type": "commercial",
-      "area": "君津市",
-      "lat": 35.2536,
-      "lng": 140.0528,
-      "hpUrl": "http://www.kakiyamada-autocamp.hello-net.info/",
-      "imageUrl": "https://images.unsplash.com/photo-1537225228614-56cc3556d7ed?w=800",
-      "catchCopy": "川のせせらぎと豊かな自然に囲まれた川遊びに最適なファミリー向けサイト",
-      "tags": [
-        "ファミリー向け",
-        "竹林・林間",
-        "川のそば",
-        "水洗トイレ",
-        "ゴミ捨て場あり",
-        "オートキャンプ",
-        "川遊び・釣り"
-      ],
-      "notes": {
-        "pet": "ペット不可",
-        "fire": "直火禁止（指定のコンロ・焚き火台をご使用ください）",
-        "facility": "足湯・温水シャワーあり。水洗トイレ完備 / 5,500円〜"
-      }
+      "area": "君津エリア",
+      "lat": 35.2530,
+      "lng": 140.0650,
+      "url": "https://www.kakiyamada-autocamp.hello-net.info/",
+      "catchphrase": "川のせせらぎと豊かな自然に囲まれたファミリー向けキャンプ場",
+      "siteType": ["オートサイト", "ファミリー"],
+      "useType": ["ファミリー", "川遊び"],
+      "location": ["川沿い", "林間"],
+      "facilities": ["水洗トイレ", "お風呂・シャワー", "ゴミ捨て場あり", "売店・レンタルあり"],
+      "experiences": ["川遊び", "釣り"],
+      "petNote": "ペット不可",
+      "bonfireNote": "直火禁止（コンロ等使用）",
+      "facilityNote": "AC電源サイトあり／温水シャワー完備"
     },
     {
       "id": "camp-005",
@@ -140,7 +136,8 @@
       "area": "君津市",
       "lat": 35.1844,
       "lng": 140.1189,
-      "hpUrl": "https://www.sengokudai.com/",
+      "hpUrl": "https://www.1059dai.com/",
+      "reservationUrl": "https://www.nap-camp.com/chiba/11957",
       "imageUrl": "https://images.unsplash.com/photo-1517824806704-9040b037703b?w=800",
       "catchCopy": "奥房総の秘境。清流小櫃川のすぐそばで自然を満喫できるアットホームなキャンプ場",
       "tags": [
@@ -167,7 +164,8 @@
       "area": "一宮町",
       "lat": 35.3522,
       "lng": 140.3842,
-      "hpUrl": "https://oceans-camp-torami.com/",
+      "hpUrl": "https://toramii.jp/camp-toramii/",
+      "reservationUrl": "https://www.nap-camp.com/chiba/14167",
       "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
       "catchCopy": "海まで徒歩圏内！サーフィンや九十九里の潮風を感じる絶好のロケーション",
       "tags": [
@@ -193,7 +191,8 @@
       "area": "富津市",
       "lat": 35.1911,
       "lng": 139.8789,
-      "hpUrl": "https://shigecamp.com/",
+      "hpUrl": "https://www.instagram.com/shigecamp.ootaki/",
+      "reservationUrl": "https://www.nap-camp.com/chiba/14805",
       "imageUrl": "https://images.unsplash.com/photo-1496545614020-20f3b00ed084?w=800",
       "catchCopy": "手作りの温かみがある隠れ家的なプライベートキャンプ場",
       "tags": [
@@ -219,7 +218,7 @@
       "area": "南房総市",
       "lat": 34.9056,
       "lng": 139.8369,
-      "hpUrl": "https://www.cm-boso.com/camp.html",
+      "hpUrl": "https://nemotocamp.securesite.jp/",
       "imageUrl": "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800",
       "catchCopy": "目の前に広がる太平洋！夏限定で開設される絶景ビーチサイドキャンプ場",
       "tags": [
@@ -237,37 +236,14 @@
       }
     },
     {
-      "id": "camp-009",
-      "name": "勝浦ショウノウ CAMP FIELD",
-      "type": "commercial",
-      "area": "勝浦市",
-      "lat": 35.1883,
-      "lng": 140.2522,
-      "hpUrl": "https://www.shono-camp.com/",
-      "imageUrl": "https://images.unsplash.com/photo-1445307806294-bff7f67ff225?w=800",
-      "catchCopy": "昔ながらの里山風景と竹林に囲まれた静寂を楽しめるブッシュクラフト向けサイト",
-      "tags": [
-        "ペットOK",
-        "ソロ向け",
-        "竹林・林間",
-        "水洗トイレ",
-        "直火OK",
-        "プライベート感"
-      ],
-      "notes": {
-        "pet": "ペット同伴可能",
-        "fire": "直火OKエリアあり（落ち葉等の清掃・消火徹底）",
-        "facility": "水洗トイレ・水場あり。静かに過ごしたいキャンパー限定 / 3,000円〜"
-      }
-    },
-    {
       "id": "camp-010",
       "name": "THE DOG DEPT GARDEN RESORT-ANBOU-",
       "type": "commercial",
       "area": "館山市",
       "lat": 34.9811,
       "lng": 139.8522,
-      "hpUrl": "https://www.dogdept.com/resort/",
+      "hpUrl": "https://dogdeptminamiboso.com/ocean/index.html",
+      "reservationUrl": "https://www.nap-camp.com/chiba/14478",
       "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800",
       "catchCopy": "愛犬家のために作られたワンちゃんファーストなノーリードOKキャンプ場",
       "tags": [
@@ -284,5 +260,77 @@
         "fire": "直火不可（専用の焚き火スペースまたは台を使用）",
         "facility": "ドッグラン、犬用シャワー、温水洗浄便座付きトイレ完備 / 10,000円〜"
       }
+    },
+    {
+      "id": "camp-sakuranooka",
+      "name": "CAMPさくらの丘",
+      "type": "commercial",
+      "area": "君津エリア",
+      "lat": 35.2890,
+      "lng": 140.0520,
+      "url": "https://www.city.kimitsu.lg.jp/site/kanko/91514.html",
+      "catchphrase": "広大な敷地と充実した遊具で子どもと一緒に楽しめる高台キャンプ場",
+      "siteType": ["オートサイト", "フリーサイト"],
+      "useType": ["ファミリー", "ソロ", "グループ", "ペット連れ"],
+      "location": ["高台", "広場"],
+      "facilities": ["水洗トイレ", "ゴミ捨て場あり", "遊具あり"],
+      "experiences": ["子供が遊べる", "景色が良い"],
+      "petNote": "ペット可",
+      "bonfireNote": "直火禁止",
+      "facilityNote": "じゃぶじゃぶ池・トランポリン等遊具あり"
+    },
+    {
+      "id": "inagasaki-campground",
+      "name": "稲ヶ崎キャンプ場",
+      "type": "commercial",
+      "area": "君津エリア",
+      "lat": 35.2010,
+      "lng": 140.1190,
+      "url": "http://inagasaki.world.coocan.jp/",
+      "catchphrase": "亀山湖畔の豊かな自然に包まれたリーズナブルな公営キャンプ場",
+      "siteType": ["オートサイト", "フリーサイト"],
+      "useType": ["ファミリー", "ソロ", "湖畔"],
+      "location": ["湖畔", "森林"],
+      "facilities": ["水洗トイレ", "シャワー", "炊事場"],
+      "experiences": ["カヌー・ボート", "湖畔ロケーション"],
+      "petNote": "ペット不可",
+      "bonfireNote": "直火禁止",
+      "facilityNote": "市営施設／オート区画・フリーサイトあり"
+    },
+    {
+      "id": "kisarazu-camp-mitate",
+      "name": "きさらづCAMP ORGANIC FIELD in みたて",
+      "type": "commercial",
+      "area": "木更津エリア",
+      "lat": 35.4380,
+      "lng": 139.8970,
+      "url": "https://kisarazu-dmo.jp/experience/kisarazu-camp-in-mitate/",
+      "catchphrase": "海越しに夕焼けと富士山を望むオーシャンビューのオートキャンプ場",
+      "siteType": ["オートサイト"],
+      "useType": ["ファミリー", "ソロ", "グループ", "海辺"],
+      "location": ["海辺", "ディープシー view"],
+      "facilities": ["水洗トイレ", "炊事場", "車乗り入れ可"],
+      "experiences": ["夕日が見える", "海が見える"],
+      "petNote": "ペット可（リード必須）",
+      "bonfireNote": "直火禁止",
+      "facilityNote": "全区画車乗り入れ可／東京湾を一望"
+    },
+    {
+      "id": "futtsu-park-campground",
+      "name": "富津公園キャンプ場",
+      "type": "commercial",
+      "area": "富津エリア",
+      "lat": 35.3080,
+      "lng": 139.8180,
+      "url": "https://futtsu-kanko.jimdofree.com/",
+      "catchphrase": "海と緑にかこまれた富津岬のフリーサイトキャンプ場",
+      "siteType": ["フリーサイト"],
+      "useType": ["ファミリー", "ソロ", "デイキャンプ"],
+      "location": ["松林", "海沿い"],
+      "facilities": ["水洗トイレ", "水道", "レンタルあり"],
+      "experiences": ["海水浴・潮干狩り", "観光拠点"],
+      "petNote": "ペット可（要事前申告）",
+      "bonfireNote": "直火禁止",
+      "facilityNote": "富津公園内／リヤカー貸出あり／日帰りBBQ可"
     }
   ]

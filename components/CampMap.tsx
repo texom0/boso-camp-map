@@ -16,6 +16,7 @@ import {
 } from "react";
 import { Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import CampPopupPhoto from "@/components/CampPopupPhoto";
 import { isPrivateCamp, type Campground } from "@/types/camp";
 
 /** パン可能な最大範囲（端のキャンプ場を中央へ寄せられるよう余裕を持たせる） */
@@ -72,17 +73,82 @@ function SafeMapContainer({ children }: { children: ReactNode }) {
       maxBounds: MAP_MAX_BOUNDS,
       maxBoundsViscosity: 0.6,
       scrollWheelZoom: true,
+      // iOS で touchend に preventDefault が付き、リンクの click が消えるのを防ぐ
+      tapHold: false,
     });
     mapRef.current = map;
     setContext(createLeafletContext(map));
   }, []);
 
   return (
-    <div ref={setNode} className="h-full w-full">
+    <div className="camp-map-host">
+      <div ref={setNode} className="camp-map-host__canvas" />
       {context ? (
         <LeafletContext value={context}>{children}</LeafletContext>
       ) : null}
     </div>
+  );
+}
+
+function stopMapGesture(event: Event) {
+  event.stopPropagation();
+  if ("stopImmediatePropagation" in event) {
+    event.stopImmediatePropagation();
+  }
+  L.DomEvent.stopPropagation(event);
+}
+
+/**
+ * Leaflet は popup 上の touchstart を stopPropagation するため、
+ * React のルート委譲まで届かない。ネイティブリスナーで遷移させる。
+ */
+function CampPopupLink({ href, label }: { href: string; label: string }) {
+  const linkRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const node = linkRef.current;
+    if (!node || !href) return;
+
+    let lastOpen = 0;
+    const open = (event: Event) => {
+      event.preventDefault();
+      stopMapGesture(event);
+      const now = Date.now();
+      if (now - lastOpen < 700) return;
+      lastOpen = now;
+      const opened = window.open(href, "_blank", "noopener,noreferrer");
+      if (opened == null) {
+        window.location.assign(href);
+      }
+    };
+
+    node.addEventListener("pointerdown", stopMapGesture, { capture: true });
+    node.addEventListener("touchstart", stopMapGesture, { capture: true, passive: true });
+    node.addEventListener("mousedown", stopMapGesture, { capture: true });
+    node.addEventListener("click", open, { capture: true });
+    node.addEventListener("pointerup", open, { capture: true });
+    node.addEventListener("touchend", open, { capture: true });
+
+    return () => {
+      node.removeEventListener("pointerdown", stopMapGesture, { capture: true });
+      node.removeEventListener("touchstart", stopMapGesture, { capture: true });
+      node.removeEventListener("mousedown", stopMapGesture, { capture: true });
+      node.removeEventListener("click", open, { capture: true });
+      node.removeEventListener("pointerup", open, { capture: true });
+      node.removeEventListener("touchend", open, { capture: true });
+    };
+  }, [href]);
+
+  return (
+    <a
+      ref={linkRef}
+      className="camp-popup__link"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {label}
+    </a>
   );
 }
 
@@ -124,6 +190,12 @@ function RecenterOnPopup() {
 
   useEffect(() => {
     function onPopupOpen(event: L.PopupEvent) {
+      const container = event.popup.getElement();
+      if (container) {
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(container);
+      }
+
       if (!isMapUsable(map)) return;
       const latlng = event.popup.getLatLng();
       if (!latlng) return;
@@ -196,7 +268,7 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
       <FitAllCamps camps={allCamps} />
       <RecenterOnPopup />
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {camps.map((camp) => {
@@ -212,14 +284,15 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
               maxWidth={320}
               autoPan
               autoPanPadding={[48, 72]}
-              keepInView
+              closeOnClick={false}
+              interactive
               className="camp-popup-wrap"
             >
               <article className="camp-popup">
-                <img
-                  className="camp-popup__photo"
-                  src={camp.imageUrl}
-                  alt={camp.name}
+                <CampPopupPhoto
+                  pageUrl={camp.hpUrl}
+                  name={camp.name}
+                  fallbackUrl={camp.imageUrl}
                 />
                 <div className="camp-popup__body">
                   <p
@@ -253,14 +326,17 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
                       );
                     })}
                   </dl>
-                  <a
-                    className="camp-popup__link"
-                    href={camp.hpUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {camp.id === "private-001" ? "予約する" : "公式HPへ行く"}
-                  </a>
+                  <div className="camp-popup__actions">
+                    {camp.hpUrl ? (
+                      <CampPopupLink href={camp.hpUrl} label="公式HPへ行く" />
+                    ) : null}
+                    {camp.reservationUrl && camp.reservationUrl !== camp.hpUrl ? (
+                      <CampPopupLink href={camp.reservationUrl} label="予約する" />
+                    ) : null}
+                    {!camp.hpUrl && camp.reservationUrl ? (
+                      <CampPopupLink href={camp.reservationUrl} label="予約する" />
+                    ) : null}
+                  </div>
                 </div>
               </article>
             </Popup>
