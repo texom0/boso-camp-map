@@ -281,19 +281,14 @@ body {
   background: #3f5c4b;
 }
 
-.filter-accordion summary::-webkit-details-marker {
-  display: none;
-}
-
-.filter-accordion summary {
-  position: relative;
+.filter-accordion__toggle {
   padding-right: 1.5rem;
   touch-action: manipulation;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(79, 111, 92, 0.25);
 }
 
-.filter-accordion summary::after {
+.filter-accordion__toggle::after {
   position: absolute;
   right: 0.75rem;
   top: 50%;
@@ -303,6 +298,6 @@ body {
   font-size: 12px;
 }
 
-.filter-accordion[open] summary::after {
+.filter-accordion[data-open="true"] .filter-accordion__toggle::after {
   content: "−";
 }

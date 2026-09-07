@@ -92,7 +92,11 @@ function FilterCheck({
   children: ReactNode;
 }) {
   return (
-    <label className="relative z-10 flex cursor-pointer touch-manipulation items-center gap-2.5 rounded-lg border border-stone-200 bg-[#f6f7f5] px-3 py-2 transition-colors has-[:checked]:border-[#7d9a86] has-[:checked]:bg-[#eef3ef]">
+    <label
+      className="relative z-10 flex cursor-pointer touch-manipulation items-center gap-2.5 rounded-lg border border-stone-200 bg-[#f6f7f5] px-3 py-2 transition-colors has-[:checked]:border-[#7d9a86] has-[:checked]:bg-[#eef3ef]"
+      onClick={(event) => event.stopPropagation()}
+      onPointerDown={(event) => event.stopPropagation()}
+    >
       <input
         type="checkbox"
         className={`size-4 shrink-0 ${accentClass ?? "accent-[#4f6f5c]"}`}
@@ -109,6 +113,7 @@ export default function CampSearchApp() {
   const [includeCommercial, setIncludeCommercial] = useState(true);
   const [includePrivate, setIncludePrivate] = useState(true);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [openGroupIds, setOpenGroupIds] = useState<string[]>(["guest"]);
 
   const visibleCamps = useMemo(() => {
     return camps.filter((camp) => {
@@ -129,6 +134,14 @@ export default function CampSearchApp() {
       current.includes(tag)
         ? current.filter((item) => item !== tag)
         : [...current, tag],
+    );
+  }
+
+  function toggleGroup(groupId: string) {
+    setOpenGroupIds((current) =>
+      current.includes(groupId)
+        ? current.filter((id) => id !== groupId)
+        : [...current, groupId],
     );
   }
 
@@ -189,29 +202,39 @@ export default function CampSearchApp() {
               </p>
 
               <div className="space-y-2">
-                {TAG_GROUPS.map((group, index) => (
-                  <details
-                    key={group.id}
-                    className="filter-accordion rounded-lg border border-stone-200 bg-[#f6f7f5]"
-                    open={index === 0}
-                  >
-                    <summary className="cursor-pointer touch-manipulation list-none px-3 py-2 text-sm font-medium text-stone-800">
-                      {group.title}
-                    </summary>
-                    <ul className="space-y-1.5 border-t border-stone-200 px-2 py-2">
-                      {group.tags.map((tag) => (
-                        <li key={tag}>
-                          <FilterCheck
-                            checked={selectedTags.includes(tag)}
-                            onChange={() => toggleTag(tag)}
-                          >
-                            <span className="text-sm text-stone-800">{tag}</span>
-                          </FilterCheck>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                ))}
+                {TAG_GROUPS.map((group) => {
+                  const isOpen = openGroupIds.includes(group.id);
+                  return (
+                    <div
+                      key={group.id}
+                      className="filter-accordion rounded-lg border border-stone-200 bg-[#f6f7f5]"
+                      data-open={isOpen ? "true" : "false"}
+                    >
+                      <button
+                        type="button"
+                        className="filter-accordion__toggle relative w-full cursor-pointer touch-manipulation px-3 py-2 text-left text-sm font-medium text-stone-800"
+                        aria-expanded={isOpen}
+                        onClick={() => toggleGroup(group.id)}
+                      >
+                        {group.title}
+                      </button>
+                      {isOpen ? (
+                        <ul className="space-y-1.5 border-t border-stone-200 px-2 py-2">
+                          {group.tags.map((tag) => (
+                            <li key={tag}>
+                              <FilterCheck
+                                checked={selectedTags.includes(tag)}
+                                onChange={() => toggleTag(tag)}
+                              >
+                                <span className="text-sm text-stone-800">{tag}</span>
+                              </FilterCheck>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  );
+                })}
               </div>
             </section>
           </div>

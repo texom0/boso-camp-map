@@ -63,8 +63,17 @@ function tagsFromMaster(raw: Record<string, unknown>): string[] {
     ...stringList(raw.experiences),
   ];
 
-  const petNote = String(raw.petNote ?? "");
-  if (petNote && !petNote.includes("不可") && /ペット\s*(可|OK|同伴)/.test(petNote)) {
+  const petNote = [
+    String(raw.petNote ?? ""),
+    raw.notes && typeof raw.notes === "object"
+      ? String((raw.notes as CampNotes).pet ?? "")
+      : "",
+  ].join(" ");
+  if (
+    petNote &&
+    !/ペット\s*(不可|禁止)/.test(petNote) &&
+    /ペット\s*(可|OK|同伴)|愛犬同伴|ペット連れ/.test(petNote)
+  ) {
     collected.push("ペットOK");
   }
 
