@@ -218,6 +218,60 @@ function RecenterOnPopup() {
   return null;
 }
 
+function shouldIgnoreOutsideClose(target: EventTarget | null) {
+  if (!(target instanceof Element)) return true;
+  return Boolean(
+    target.closest(".leaflet-popup") ||
+      target.closest(".leaflet-control") ||
+      target.closest(".camp-pin") ||
+      target.closest(".leaflet-marker-icon"),
+  );
+}
+
+/** ポップアップ枠外の地図クリック／タップで閉じる */
+function ClosePopupOnOutsideTap() {
+  const map = useMap();
+
+  useEffect(() => {
+    let ignoreUntil = 0;
+
+    const markOpened = () => {
+      ignoreUntil = Date.now() + 250;
+    };
+
+    const closeIfOutside = (target: EventTarget | null) => {
+      if (!map.isPopupOpen()) return;
+      if (Date.now() < ignoreUntil) return;
+      if (shouldIgnoreOutsideClose(target)) return;
+      map.closePopup();
+    };
+
+    const onMapClick = (event: L.LeafletMouseEvent) => {
+      closeIfOutside(event.originalEvent.target);
+    };
+
+    const onPointerUp = (event: Event) => {
+      closeIfOutside(event.target);
+    };
+
+    map.on("popupopen", markOpened);
+    map.on("click", onMapClick);
+
+    const container = map.getContainer();
+    container.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("touchend", onPointerUp);
+
+    return () => {
+      map.off("popupopen", markOpened);
+      map.off("click", onMapClick);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("touchend", onPointerUp);
+    };
+  }, [map]);
+
+  return null;
+}
+
 type CampMapProps = {
   camps: Campground[];
   allCamps: Campground[];
@@ -340,6 +394,7 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
     <SafeMapContainer>
       <FitAllCamps camps={allCamps} />
       <RecenterOnPopup />
+      <ClosePopupOnOutsideTap />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
