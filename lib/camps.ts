@@ -1,4 +1,4 @@
-import { type Campground, type CampNotes } from "@/types/camp";
+import { type Campground, type CampNotes, type CampType } from "@/types/camp";
 
 function toAbsoluteHttpUrl(value: unknown): string {
   if (typeof value !== "string") return "";
@@ -192,12 +192,13 @@ export function normalizeCamps(data: unknown): Campground[] {
     const hpUrl = toAbsoluteHttpUrl(raw.hpUrl ?? raw.url);
     const reservationUrl = toAbsoluteHttpUrl(raw.reservationUrl);
     const tags = tagsFromMaster(raw);
+    const type: CampType = raw.type === "private" ? "private" : "commercial";
 
     return [
       {
         id: String(raw.id ?? `${lat},${lng}`),
         name: String(raw.name ?? "名称未設定"),
-        type: raw.type === "private" ? "private" : "commercial",
+        type,
         area: String(raw.area ?? ""),
         lat,
         lng,
