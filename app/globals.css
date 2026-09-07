@@ -66,13 +66,21 @@ body {
   box-shadow: 0 8px 24px rgb(47 51 46 / 0.12);
   padding: 0;
   overflow: hidden;
+  background: #fff;
 }
 
 .leaflet-popup-content {
-  margin: 0;
+  margin: 0 !important;
   width: 300px !important;
-  max-height: min(70vh, 560px);
+  max-height: min(70vh, 480px);
   overflow-y: auto;
+  line-height: 1.4;
+}
+
+.leaflet-popup-content p,
+.leaflet-popup-content h3,
+.leaflet-popup-content dl {
+  margin: 0;
 }
 
 .leaflet-popup-tip {
@@ -140,43 +148,36 @@ body {
 
 .camp-popup {
   color: #2f332e;
+  background: #fff;
 }
 
+.camp-popup__photo-frame {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  line-height: 0;
+  background: #fff;
+}
+
+.leaflet-container .camp-popup__photo,
+.leaflet-popup-content .camp-popup__photo,
 .camp-popup__photo {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100% !important;
   max-width: 100% !important;
-  height: 140px !important;
+  height: 100% !important;
   object-fit: cover;
+  object-position: center;
 }
 
-.camp-popup__photo--skeleton {
-  background: linear-gradient(90deg, #e6ebe6 25%, #f3f6f3 50%, #e6ebe6 75%);
-  background-size: 200% 100%;
-  animation: camp-photo-shimmer 1.2s linear infinite;
-}
-
-.camp-popup__photo--fallback {
-  display: flex;
-  align-items: flex-end;
-  box-sizing: border-box;
-  padding: 12px 14px;
-  background:
-    linear-gradient(180deg, rgb(22 56 43 / 0.08), rgb(12 34 26 / 0.55)),
-    linear-gradient(135deg, #7d9a86, #4f6f5c 55%, #16382b);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-@keyframes camp-photo-shimmer {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: -100% 0;
-  }
+.camp-popup:not(.camp-popup--eneca) .camp-popup__photo-frame,
+.camp-popup:not(.camp-popup--eneca) .camp-popup__photo {
+  display: none !important;
+  height: 0 !important;
 }
 
 .camp-popup__body {
@@ -190,14 +191,16 @@ body {
   color: #7d9a86;
 }
 
-.camp-popup__title {
+.camp-popup__title,
+.leaflet-popup-content .camp-popup__title {
   margin: 0 0 6px;
   font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
 }
 
-.camp-popup__desc {
+.camp-popup__desc,
+.leaflet-popup-content .camp-popup__desc {
   margin: 0 0 10px;
   font-size: 12px;
   line-height: 1.6;

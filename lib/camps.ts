@@ -107,7 +107,6 @@ export function normalizeCamps(data: unknown): Campground[] {
 
     const hpUrl = toAbsoluteHttpUrl(raw.hpUrl ?? raw.url);
     const reservationUrl = toAbsoluteHttpUrl(raw.reservationUrl);
-    const imageUrl = toAbsoluteHttpUrl(raw.imageUrl);
     const tags = tagsFromMaster(raw);
 
     return [
@@ -120,7 +119,6 @@ export function normalizeCamps(data: unknown): Campground[] {
         lng,
         hpUrl,
         reservationUrl: reservationUrl || undefined,
-        imageUrl: imageUrl || undefined,
         catchCopy: String(raw.catchCopy ?? raw.catchphrase ?? ""),
         tags,
         notes: notesFromMaster(raw),

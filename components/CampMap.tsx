@@ -16,8 +16,11 @@ import {
 } from "react";
 import { Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import CampPopupPhoto from "@/components/CampPopupPhoto";
-import { isPrivateCamp, type Campground } from "@/types/camp";
+import {
+  isEnecaCamp,
+  isPrivateCamp,
+  type Campground,
+} from "@/types/camp";
 
 /** パン可能な最大範囲（端のキャンプ場を中央へ寄せられるよう余裕を持たせる） */
 const MAP_MAX_BOUNDS = L.latLngBounds(
@@ -201,7 +204,8 @@ function RecenterOnPopup() {
       if (!latlng) return;
 
       const point = map.project(latlng);
-      point.y -= 96;
+      const hasPhoto = Boolean(container?.querySelector(".camp-popup--eneca"));
+      point.y -= hasPhoto ? 96 : 40;
       map.panTo(map.unproject(point), { animate: true, duration: 0.45 });
     }
 
@@ -218,6 +222,75 @@ type CampMapProps = {
   camps: Campground[];
   allCamps: Campground[];
 };
+
+function CampPopupCard({ camp }: { camp: Campground }) {
+  const privateSite = isPrivateCamp(camp);
+  const showEnecaPhoto = isEnecaCamp(camp);
+
+  const body = (
+    <div className="camp-popup__body">
+      <span
+        className={
+          privateSite
+            ? "camp-popup__badge camp-popup__badge--private"
+            : "camp-popup__badge camp-popup__badge--commercial"
+        }
+      >
+        {privateSite ? "【個人貸し・お庭】" : "【商業キャンプ場】"}
+      </span>
+      <div className="camp-popup__area">{camp.area}</div>
+      <h3 className="camp-popup__title">{camp.name}</h3>
+      {camp.catchCopy ? <p className="camp-popup__desc">{camp.catchCopy}</p> : null}
+      {camp.tags.length > 0 ? (
+        <div className="camp-popup__tags">
+          {camp.tags.map((tag) => (
+            <span key={tag} className="camp-popup__tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <dl className="camp-popup__notes">
+        {NOTE_LABELS.map(({ key, label }) => {
+          const value = camp.notes[key];
+          if (!value) return null;
+          return (
+            <div key={key}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          );
+        })}
+      </dl>
+      <div className="camp-popup__actions">
+        {camp.hpUrl ? <CampPopupLink href={camp.hpUrl} label="公式HPへ行く" /> : null}
+        {camp.reservationUrl && camp.reservationUrl !== camp.hpUrl ? (
+          <CampPopupLink href={camp.reservationUrl} label="予約する" />
+        ) : null}
+        {!camp.hpUrl && camp.reservationUrl ? (
+          <CampPopupLink href={camp.reservationUrl} label="予約する" />
+        ) : null}
+      </div>
+    </div>
+  );
+
+  if (!showEnecaPhoto) {
+    return <article className="camp-popup">{body}</article>;
+  }
+
+  return (
+    <article className="camp-popup camp-popup--eneca">
+      <div className="camp-popup__photo-frame">
+        <img
+          className="camp-popup__photo object-cover"
+          src="/eneca.jpg"
+          alt={camp.name}
+        />
+      </div>
+      {body}
+    </article>
+  );
+}
 
 const PIN_SIZE = { iconSize: [44, 54] as [number, number], iconAnchor: [22, 50] as [number, number], popupAnchor: [0, -42] as [number, number] };
 
@@ -288,57 +361,7 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
               interactive
               className="camp-popup-wrap"
             >
-              <article className="camp-popup">
-                <CampPopupPhoto
-                  pageUrl={camp.hpUrl}
-                  name={camp.name}
-                  fallbackUrl={camp.imageUrl}
-                />
-                <div className="camp-popup__body">
-                  <p
-                    className={
-                      privateSite
-                        ? "camp-popup__badge camp-popup__badge--private"
-                        : "camp-popup__badge camp-popup__badge--commercial"
-                    }
-                  >
-                    {privateSite ? "【個人貸し・お庭】" : "【商業キャンプ場】"}
-                  </p>
-                  <p className="camp-popup__area">{camp.area}</p>
-                  <h3 className="camp-popup__title">{camp.name}</h3>
-                  <p className="camp-popup__desc">{camp.catchCopy}</p>
-                  <div className="camp-popup__tags">
-                    {camp.tags.map((tag) => (
-                      <span key={tag} className="camp-popup__tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <dl className="camp-popup__notes">
-                    {NOTE_LABELS.map(({ key, label }) => {
-                      const value = camp.notes[key];
-                      if (!value) return null;
-                      return (
-                        <div key={key}>
-                          <dt>{label}</dt>
-                          <dd>{value}</dd>
-                        </div>
-                      );
-                    })}
-                  </dl>
-                  <div className="camp-popup__actions">
-                    {camp.hpUrl ? (
-                      <CampPopupLink href={camp.hpUrl} label="公式HPへ行く" />
-                    ) : null}
-                    {camp.reservationUrl && camp.reservationUrl !== camp.hpUrl ? (
-                      <CampPopupLink href={camp.reservationUrl} label="予約する" />
-                    ) : null}
-                    {!camp.hpUrl && camp.reservationUrl ? (
-                      <CampPopupLink href={camp.reservationUrl} label="予約する" />
-                    ) : null}
-                  </div>
-                </div>
-              </article>
+              <CampPopupCard camp={camp} />
             </Popup>
           </Marker>
         );
