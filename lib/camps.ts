@@ -50,6 +50,7 @@ const FILTER_TAG_MAP: Record<string, string> = {
   シャワー: "お風呂・温泉あり",
   ゴミ捨て場あり: "ゴミ捨て場あり",
   AC電源あり: "AC電源あり",
+  プライベート感: "プライベート感",
 };
 
 function tagsFromMaster(raw: Record<string, unknown>): string[] {

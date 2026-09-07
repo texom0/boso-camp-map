@@ -1,35 +1,22 @@
 [
   {
     "id": "eneca",
-    "name": "庭キャンプ eneca",
+    "name": "保護猫スペース eneca",
     "type": "private",
-    "area": "木更津市",
+    "area": "木更津エリア",
     "lat": 35.3528,
     "lng": 140.0019,
-    "hpUrl": "https://niwa-camp-eneca.stores.jp/",
+    "url": "https://hogonekospaceeneca.wixsite.com/my-site-3",
     "reservationUrl": "https://niwa-camp-eneca.stores.jp/reserve/honten-i2vi3z/3517145",
-    "catchCopy": "矢那の自然に囲まれた1日1組限定のプライベート庭キャンプスペース",
-    "tags": [
-      "ペットOK",
-      "日帰りOK",
-      "竹林・林間",
-      "星空がきれい",
-      "水洗トイレ",
-      "お風呂・温泉あり",
-      "AC電源あり",
-      "ゴミ捨て場あり",
-      "オートキャンプ",
-      "直火OK",
-      "ドラム缶風呂・五右衛門風呂",
-      "サウナ",
-      "ピザ窯",
-      "プライベート感"
-    ],
-    "notes": {
-      "pet": "愛犬同伴OK",
-      "fire": "直火OK（ファイヤーピット完備）",
-      "facility": "建物内の水洗トイレ・お風呂利用可能（時間指定・制限あり） / 予約制"
-    }
+    "catchphrase": "矢那の古民家で保護猫と過ごす、1日1組限定のプライベート庭スペース",
+    "siteType": ["フリーサイト"],
+    "useType": ["ファミリー", "ソロ", "ペット連れ"],
+    "location": ["林間"],
+    "facilities": ["水洗トイレ", "お風呂・シャワー", "AC電源あり"],
+    "experiences": ["プライベート感"],
+    "petNote": "保護猫が暮らしています／愛犬同伴は要確認",
+    "bonfireNote": "直火OK（ファイヤーピット完備）",
+    "facilityNote": "建物内の水洗トイレ・お風呂利用可能（時間指定・制限あり）／予約制"
   },
   {
     "id": "camp-001",
