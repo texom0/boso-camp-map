@@ -75,6 +75,7 @@ function SafeMapContainer({ children }: { children: ReactNode }) {
       maxZoom: 16,
       maxBounds: MAP_MAX_BOUNDS,
       maxBoundsViscosity: 0.6,
+      closePopupOnClick: true,
       scrollWheelZoom: true,
       // iOS で touchend に preventDefault が付き、リンクの click が消えるのを防ぐ
       tapHold: false,
@@ -218,56 +219,68 @@ function RecenterOnPopup() {
   return null;
 }
 
-function shouldIgnoreOutsideClose(target: EventTarget | null) {
-  if (!(target instanceof Element)) return true;
+function isInsidePopupBubble(target: EventTarget | null) {
+  if (!(target instanceof Element)) return false;
+  const popup = target.closest(".leaflet-popup");
+  return Boolean(popup && !popup.classList.contains("leaflet-popup-pane"));
+}
+
+function isMapChrome(target: EventTarget | null) {
+  if (!(target instanceof Element)) return false;
   return Boolean(
-    target.closest(".leaflet-popup") ||
-      target.closest(".leaflet-control") ||
+    target.closest(".leaflet-control") ||
       target.closest(".camp-pin") ||
       target.closest(".leaflet-marker-icon"),
   );
 }
 
-/** ポップアップ枠外の地図クリック／タップで閉じる */
-function ClosePopupOnOutsideTap() {
+/** 地図キャンバス／背景の click で選択中ポップアップを閉じる */
+function ClosePopupOnMapClick({
+  selectedCampId,
+  onClearSelection,
+}: {
+  selectedCampId: string | null;
+  onClearSelection: () => void;
+}) {
   const map = useMap();
 
   useEffect(() => {
-    let ignoreUntil = 0;
+    map.options.closePopupOnClick = true;
+  }, [map]);
 
-    const markOpened = () => {
-      ignoreUntil = Date.now() + 250;
-    };
+  useEffect(() => {
+    if (selectedCampId === null) {
+      map.closePopup();
+    }
+  }, [map, selectedCampId]);
 
-    const closeIfOutside = (target: EventTarget | null) => {
-      if (!map.isPopupOpen()) return;
-      if (Date.now() < ignoreUntil) return;
-      if (shouldIgnoreOutsideClose(target)) return;
+  useEffect(() => {
+    const dismiss = (target: EventTarget | null) => {
+      if (isInsidePopupBubble(target) || isMapChrome(target)) return;
+      onClearSelection();
       map.closePopup();
     };
 
-    const onMapClick = (event: L.LeafletMouseEvent) => {
-      closeIfOutside(event.originalEvent.target);
+    const onLeafletClick = (event: L.LeafletMouseEvent) => {
+      dismiss(event.originalEvent.target);
     };
 
-    const onPointerUp = (event: Event) => {
-      closeIfOutside(event.target);
+    const onCanvasClick = (event: Event) => {
+      dismiss(event.target);
     };
 
-    map.on("popupopen", markOpened);
-    map.on("click", onMapClick);
+    map.on("preclick", onLeafletClick);
+    map.on("click", onLeafletClick);
 
-    const container = map.getContainer();
-    container.addEventListener("pointerup", onPointerUp);
-    container.addEventListener("touchend", onPointerUp);
+    const canvas = map.getContainer();
+    canvas.addEventListener("click", onCanvasClick);
 
     return () => {
-      map.off("popupopen", markOpened);
-      map.off("click", onMapClick);
-      container.removeEventListener("pointerup", onPointerUp);
-      container.removeEventListener("touchend", onPointerUp);
+      map.off("preclick", onLeafletClick);
+      map.off("click", onLeafletClick);
+      canvas.removeEventListener("click", onCanvasClick);
     };
-  }, [map]);
+  }, [map, onClearSelection]);
 
   return null;
 }
@@ -374,6 +387,7 @@ const PRIVATE_PIN_SVG = `
 `;
 
 export default function CampMap({ camps, allCamps }: CampMapProps) {
+  const [selectedCampId, setSelectedCampId] = useState<string | null>(null);
   const icons = useMemo(
     () => ({
       camp: L.divIcon({
@@ -390,11 +404,18 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
     [],
   );
 
+  const clearSelection = useCallback(() => {
+    setSelectedCampId(null);
+  }, []);
+
   return (
     <SafeMapContainer>
       <FitAllCamps camps={allCamps} />
       <RecenterOnPopup />
-      <ClosePopupOnOutsideTap />
+      <ClosePopupOnMapClick
+        selectedCampId={selectedCampId}
+        onClearSelection={clearSelection}
+      />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -406,15 +427,27 @@ export default function CampMap({ camps, allCamps }: CampMapProps) {
             key={`${camp.id}:${camp.lat},${camp.lng}`}
             position={[camp.lat, camp.lng]}
             icon={privateSite ? icons.private : icons.camp}
+            eventHandlers={{
+              click: () => {
+                setSelectedCampId(camp.id);
+              },
+            }}
           >
             <Popup
               minWidth={300}
               maxWidth={320}
               autoPan
               autoPanPadding={[48, 72]}
-              closeOnClick={false}
+              closeOnClick
               interactive
               className="camp-popup-wrap"
+              eventHandlers={{
+                remove: () => {
+                  setSelectedCampId((current) =>
+                    current === camp.id ? null : current,
+                  );
+                },
+              }}
             >
               <CampPopupCard camp={camp} />
             </Popup>
