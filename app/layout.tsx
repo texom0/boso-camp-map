@@ -20,24 +20,13 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-const siteTitle = "房総 CAMP FINDER｜千葉・房総のこだわりキャンプ場マップ検索";
+const siteTitle = "房総キャンプ場マップ | 君津・木更津・富津エリア";
 const siteDescription =
-  "千葉・房総エリアの隠れ家・穴場キャンプ場を条件指定でマップ検索。直火OK・ペット可・海が見えるなど、こだわりの条件で探して公式HP・予約ページへダイレクトアクセス。";
+  "千葉県房総エリア（君津・木更津・富津など）のキャンプ場を網羅したインタラクティブマップ。設備や利用スタイルから簡単に検索できます。";
 
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
-  keywords: [
-    "房総",
-    "キャンプ場",
-    "千葉",
-    "マップ検索",
-    "直火OK",
-    "ペット可",
-    "海が見える",
-    "隠れ家キャンプ場",
-    "穴場キャンプ場",
-  ],
   robots: {
     index: true,
     follow: true,
@@ -47,7 +36,6 @@ export const metadata: Metadata = {
     description: siteDescription,
     locale: "ja_JP",
     type: "website",
-    siteName: "房総 CAMP FINDER",
   },
   twitter: {
     card: "summary",
