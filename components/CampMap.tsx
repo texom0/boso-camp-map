@@ -94,17 +94,10 @@ function SafeMapContainer({ children }: { children: ReactNode }) {
   );
 }
 
-function stopMapGesture(event: Event) {
-  event.stopPropagation();
-  if ("stopImmediatePropagation" in event) {
-    event.stopImmediatePropagation();
-  }
-  L.DomEvent.stopPropagation(event);
-}
-
 /**
  * Leaflet は popup 上の touchstart を stopPropagation するため、
- * React のルート委譲まで届かない。ネイティブリスナーで遷移させる。
+ * React のルート委譲まで届かない。ネイティブリスナーで新タブを開く。
+ * 元のタブは絶対に遷移させない。
  */
 function CampPopupLink({ href, label }: { href: string; label: string }) {
   const linkRef = useRef<HTMLAnchorElement | null>(null);
@@ -114,32 +107,47 @@ function CampPopupLink({ href, label }: { href: string; label: string }) {
     if (!node || !href) return;
 
     let lastOpen = 0;
-    const open = (event: Event) => {
-      event.preventDefault();
-      stopMapGesture(event);
+
+    const stopBubble = (event: Event) => {
+      event.stopPropagation();
+      if ("stopImmediatePropagation" in event) {
+        event.stopImmediatePropagation();
+      }
+      L.DomEvent.stopPropagation(event);
+    };
+
+    const openNewTab = () => {
       const now = Date.now();
       if (now - lastOpen < 700) return;
       lastOpen = now;
       const opened = window.open(href, "_blank", "noopener,noreferrer");
-      if (opened == null) {
-        window.location.assign(href);
-      }
+      if (opened) opened.opener = null;
     };
 
-    node.addEventListener("pointerdown", stopMapGesture, { capture: true });
-    node.addEventListener("touchstart", stopMapGesture, { capture: true, passive: true });
-    node.addEventListener("mousedown", stopMapGesture, { capture: true });
-    node.addEventListener("click", open, { capture: true });
-    node.addEventListener("pointerup", open, { capture: true });
-    node.addEventListener("touchend", open, { capture: true });
+    const onClick = (event: Event) => {
+      stopBubble(event);
+      // ブラウザの target="_blank" に任せる。preventDefault しない。
+      lastOpen = Date.now();
+    };
+
+    const onTouchEnd = (event: Event) => {
+      stopBubble(event);
+      if (event.cancelable) event.preventDefault();
+      openNewTab();
+    };
+
+    node.addEventListener("pointerdown", stopBubble, { capture: true });
+    node.addEventListener("touchstart", stopBubble, { capture: true, passive: true });
+    node.addEventListener("mousedown", stopBubble, { capture: true });
+    node.addEventListener("click", onClick, { capture: true });
+    node.addEventListener("touchend", onTouchEnd, { capture: true });
 
     return () => {
-      node.removeEventListener("pointerdown", stopMapGesture, { capture: true });
-      node.removeEventListener("touchstart", stopMapGesture, { capture: true });
-      node.removeEventListener("mousedown", stopMapGesture, { capture: true });
-      node.removeEventListener("click", open, { capture: true });
-      node.removeEventListener("pointerup", open, { capture: true });
-      node.removeEventListener("touchend", open, { capture: true });
+      node.removeEventListener("pointerdown", stopBubble, { capture: true });
+      node.removeEventListener("touchstart", stopBubble, { capture: true });
+      node.removeEventListener("mousedown", stopBubble, { capture: true });
+      node.removeEventListener("click", onClick, { capture: true });
+      node.removeEventListener("touchend", onTouchEnd, { capture: true });
     };
   }, [href]);
 

@@ -95,15 +95,99 @@ function notesFromMaster(raw: Record<string, unknown>): CampNotes {
   return notes;
 }
 
+/** 千葉県（房総）として扱う矩形。この範囲外をエリア外とみなす */
+const CHIBA_LAT_MIN = 34.8;
+const CHIBA_LAT_MAX = 36.0;
+const CHIBA_LNG_MIN = 139.7;
+const CHIBA_LNG_MAX = 140.9;
+
+/**
+ * 房総・千葉の陸域をやや海側に膨らませた簡易ポリゴン [lat, lng]。
+ * 海岸のキャンプ場は内側、東京湾・太平洋の沖は外側になる。
+ */
+const CHIBA_LAND_RING: readonly [number, number][] = [
+  [35.92, 139.85],
+  [35.92, 140.55],
+  [35.85, 140.86],
+  [35.7, 140.88],
+  [35.55, 140.52],
+  [35.4, 140.42],
+  [35.25, 140.42],
+  [35.12, 140.32],
+  [35.0, 140.15],
+  [34.88, 139.95],
+  [34.88, 139.78],
+  [35.0, 139.76],
+  [35.15, 139.78],
+  [35.28, 139.76],
+  [35.38, 139.85],
+  [35.48, 139.88],
+  [35.58, 140.0],
+  [35.7, 139.92],
+  [35.85, 139.85],
+];
+
+function isInsideChibaBounds(lat: number, lng: number) {
+  return (
+    lat >= CHIBA_LAT_MIN &&
+    lat <= CHIBA_LAT_MAX &&
+    lng >= CHIBA_LNG_MIN &&
+    lng <= CHIBA_LNG_MAX
+  );
+}
+
+/** レイキャスティング（lng=x, lat=y） */
+function isInsideLandRing(lat: number, lng: number) {
+  let inside = false;
+  const ring = CHIBA_LAND_RING;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [latI, lngI] = ring[i];
+    const [latJ, lngJ] = ring[j];
+    const crosses = lngI > lng !== lngJ > lng;
+    if (!crosses) continue;
+    const intersectLat = ((latJ - latI) * (lng - lngI)) / (lngJ - lngI) + latI;
+    if (lat < intersectLat) inside = !inside;
+  }
+  return inside;
+}
+
+function isClearlyAtSea(lat: number, lng: number) {
+  if (!isInsideChibaBounds(lat, lng)) return false;
+  return !isInsideLandRing(lat, lng);
+}
+
+function campCoordLabel(camp: Pick<Campground, "id" | "name" | "lat" | "lng">) {
+  return `${camp.name} (${camp.id}) lat=${camp.lat}, lng=${camp.lng}`;
+}
+
+/** 千葉県エリア外・明らかに海上の座標をコンソールエラーとして出す */
+export function warnInvalidCampCoordinates(camps: Campground[]) {
+  for (const camp of camps) {
+    if (!isInsideChibaBounds(camp.lat, camp.lng)) {
+      console.error(
+        `[camp-coords] 千葉県エリア外です（lat 34.8〜36.0 / lng 139.7〜140.9 の範囲外）: ${campCoordLabel(camp)}`,
+      );
+    }
+    if (isClearlyAtSea(camp.lat, camp.lng)) {
+      console.error(`[camp-coords] 明らかに海上に位置しています: ${campCoordLabel(camp)}`);
+    }
+  }
+}
+
 export function normalizeCamps(data: unknown): Campground[] {
   if (!Array.isArray(data)) return [];
 
-  return data.flatMap((item) => {
+  const camps = data.flatMap((item) => {
     if (!item || typeof item !== "object") return [];
     const raw = item as Record<string, unknown>;
     const lat = Number(raw.lat);
     const lng = Number(raw.lng);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return [];
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      console.error(
+        `[camp-coords] 座標が不正です: ${String(raw.name ?? "名称未設定")} (${String(raw.id ?? "?")}) lat=${String(raw.lat)}, lng=${String(raw.lng)}`,
+      );
+      return [];
+    }
 
     const hpUrl = toAbsoluteHttpUrl(raw.hpUrl ?? raw.url);
     const reservationUrl = toAbsoluteHttpUrl(raw.reservationUrl);
@@ -125,4 +209,7 @@ export function normalizeCamps(data: unknown): Campground[] {
       },
     ];
   });
+
+  warnInvalidCampCoordinates(camps);
+  return camps;
 }
